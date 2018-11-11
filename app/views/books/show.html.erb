@@ -15,12 +15,18 @@
       </tbody>
     </table>
     <div class="row">
-    <% if @user == current_user %>
-      <%= link_to  "",  edit_user_path, class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench"  %>
-    <% end %>
+      <%= link_to  "",  edit_user_path(current_user), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench"  %>
     </div>
     <h2>New book</h2>
-    <%= form_for(@book) do |f| %>
+    <%= form_for(@new_book) do |f| %>
+
+    <% if @new_book.errors.any? %>
+        <%= @new_book.errors.count %>件のエラーが発生しました
+        <% @new_book.errors.full_messages.each do |message| %>
+            <%= message %>
+        <% end %>
+    <% end %>
+
      <div class="field row">
       <%= f.label :Title %>
       <%= f.text_field :title, class: "col-xs-12 book_title" %>
@@ -39,19 +45,29 @@
     <table class="table table-hover table-inverse">
       <thead>
         <tr>
-          <th>image</th>
-          <th>Title</th>
-          <th>Opinion</th>
+          <th></th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-      <% @user.books.each do |f| %>
         <tr>
-           <th><%= attachment_image_tag f.user, :image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %></th>
-           <th><%= f.title %></th>
-           <th><%= f.body %></th>
+          <th>
+            <%= link_to user_path(@book.user) do %>
+            <%= attachment_image_tag @book.user, :image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %>
+           <%= @book.user.name %>
+           <% end %>
+          </th>
+           <% if @book.user == current_user %>
+           <th><%= @book.title %></th>
+           <th><%= @book.body %></th>
+           <th> <%= link_to  "Edit",  edit_book_path %></th>
+           <th><%= link_to "Destroy", book_path(@book), method: :delete, "data-confirm" => "本当に削除しますか？" %></th>
+           <% else %>
+           <th><%= @book.title %></th>
+           <th><%= @book.body %></th>
+           <% end %>
         </tr>
-      <% end %>
       </tbody>
     </table>
   </div>

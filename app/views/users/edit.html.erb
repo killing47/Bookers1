@@ -1,11 +1,18 @@
 <h2>User info</h2>
-<%= form_for(@user, url: user_path) do |f| %>
+<%= form_for(@user) do |f| %>
+
+<% if @user.errors.any? %>
+        <%= @user.errors.count %>件のエラーが発生しました
+        <% @user.errors.full_messages.each do |message| %>
+            <%= message %>
+        <% end %>
+    <% end %>
+
   <div class="field">
-   <%= f.label :Name %>
-   <%= f.text_field :name, class: "name" %>
+    <%= f.label :Name %>
+    <%= f.text_field :name, class: "name" %>
   </div>
   <div class="field">
-    <div class="user-edit-image">
      <%= f.label :image %>
      <%= f.attachment_field :image %>
   </div>

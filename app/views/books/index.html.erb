@@ -15,12 +15,18 @@
       </tbody>
     </table>
     <div class="row">
-    <% if @user == current_user %>
-      <%= link_to  "",  edit_user_path, class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench"  %>
-    <% end %>
+      <%= link_to  "",  edit_user_path(current_user), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench"  %>
     </div>
     <h2>New book</h2>
-    <%= form_for(@book) do |f| %>
+    <%= form_for(@new_book) do |f| %>
+
+    <% if @new_book.errors.any? %>
+        <%= @new_book.errors.count %>件のエラーが発生しました
+        <% @new_book.errors.full_messages.each do |message| %>
+            <%= message %>
+        <% end %>
+    <% end %>
+
      <div class="field row">
       <%= f.label :Title %>
       <%= f.text_field :title, class: "col-xs-12 book_title" %>
@@ -45,14 +51,20 @@
         </tr>
       </thead>
       <tbody>
-      <% @user.books.each do |f| %>
+      <% @books.each do |books| %>
         <tr>
-           <th><%= attachment_image_tag f, :image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %></th>
-           <th><%= f.title %></th>
-           <th><%= f.body %></th>
+           <th>
+            <%= link_to user_path(books.id) do %>
+            <%= attachment_image_tag books.user, :image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %>
+            <% end %>
+            </th>
+           <th><%= link_to book_path(books.id) do %><%= books.title %><% end %>
+            </th>
+           <th><%= books.body %></th>
         </tr>
       <% end %>
       </tbody>
     </table>
   </div>
 </div>
+<%= paginate @books, class: "pagenate" %>
