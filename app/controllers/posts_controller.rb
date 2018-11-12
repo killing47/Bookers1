@@ -8,10 +8,10 @@ class PostsController < ApplicationController
   end
 
   def create
-    post = Post.new(post_params)
-    if post.save
+    @post = Post.new(post_params)
+    if @post.save
       flash[:notice] = "Book was successfully created."
-      redirect_to post_path(post)
+      redirect_to post_path(@post)
     end
   end
 
