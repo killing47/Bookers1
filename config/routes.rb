@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get    '/' => 'posts#top'
-  get    '/new' => 'posts#new'
+  get    '/posts' => 'posts#index'
   post   'posts' => 'posts#create'
   get    '/posts/:id' => 'posts#show', as: 'post'
   get    '/posts/:id/edit' => 'posts#edit', as: 'edit_post'

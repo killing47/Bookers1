@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   def top
   end
 
-  def new
+  def index
     @posts = Post.all
     @post = Post.new
   end
@@ -11,7 +11,7 @@ class PostsController < ApplicationController
     post = Post.new(post_params)
     if post.save
       flash[:notice] = "Book was successfully created."
-      redirect_to post_path(post.id)
+      redirect_to post_path(post)
     end
   end
 
@@ -27,7 +27,7 @@ class PostsController < ApplicationController
     post = Post.find(params[:id])
     if post.update(post_params)
        flash[:notice] = "Book was successfully update."
-       redirect_to post_path(post.id)
+       redirect_to post_path(post)
     end
   end
 
@@ -35,11 +35,12 @@ class PostsController < ApplicationController
     post = Post.find(params[:id])
     if post.destroy
       flash[:notice] = "Book was successfully desroyed."
-      redirect_to new_path
+      redirect_to posts_path
     end
   end
 
   private
+
   def post_params
     params.require(:post).permit(:title, :body)
   end

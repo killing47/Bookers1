@@ -14,9 +14,9 @@
    <tr>
      <td><%= post.title %></td>
      <td><%= post.body %></td>
-     <td><%= link_to 'Show', post_path(post), class:"show_#{id}" %></td>
-     <td><%= link_to 'Edit', edit_post_path(post), class:"edit_#{id}" %></td>
-     <td><%= link_to 'Destroy', post_path(post), method: :delete, class:"destroy_#{id}" %></td>
+     <td><%= link_to 'Show', post_path(post), class: "show_#{:id}" %></td>
+     <td><%= link_to 'Edit', edit_post_path(post), class: "edit_#{:id}" %></td>
+     <td><%= link_to 'Destroy', post_path(post), method: :delete, class: "destroy_#{:id}" %></td>
    </tr>
  </tbody>
 <% end %>
@@ -26,11 +26,11 @@
 <%= form_for(@post) do |f| %>
  <div class="field">
    <%= f.label :Title %>
-   <%= f.text_field :title, class:"book_title" %>
+   <%= f.text_field :title, class: "book_title" %>
  </div>
  <div class="field">
    <%= f.label :Body %>
-   <%= f.text_area :body, class:"book_body" %>
+   <%= f.text_area :body, class: "book_body" %>
  </div>
  <div class="actions">
 
